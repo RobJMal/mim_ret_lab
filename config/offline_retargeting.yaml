@@ -15,14 +15,10 @@ defaults:
   - override hydra/job_logging: disabled
 
 chirality: right # left | right
-data_base_path: ./dataset/wilor # base path for hand dataset (can be absolute)
-# hand_dataset: dexycb # e.g. dexycb
-hand_dataset: wilor_test_long
+data_base_path: ./dataset/manus # base path for hand dataset (can be absolute)
 # Which offline reader to use when use_offline_data is true.
-# - wilor: HandDatasetReader (MANO 21-keypoint zarr); reads cfg.hand_dataset.
 # - manus: ManusNpzReader (MANUS 25-keypoint npz); reads every .npz under cfg.data_base_path.
-#         Override data_base_path=./dataset/manus when picking this.
-offline_source: wilor
+offline_source: manus
 simulator: mujoco
 logging:
   level: INFO

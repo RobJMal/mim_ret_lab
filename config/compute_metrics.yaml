@@ -1,6 +1,6 @@
 defaults:
   - _self_
-  - dataset: wilor # wilor | manus — pulls in human_hand, data_path, metric variants
+  - dataset: manus
   - hand: shadow_hand
   - retargeter: keyvector
   - retargeter_cfg@keyvector_retargeter: keyvector/human_hand_to_${hand}

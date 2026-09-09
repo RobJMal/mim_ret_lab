@@ -33,12 +33,7 @@ class Scene(enum.Enum):
 
 class HandDataset(enum.Enum):
     DEXYCB = "dexycb"
-    WILOR_TEST_LONG = "wilor_test_long"
-    WILOR_TEST_IMAGES = "wilor_test_images"
-    WILOR_TEST_INDEX_MCP = "wilor_test_index_mcp"
-    WILOR_TEST_THUMB = "wilor_thumb_test"
     KEYVECTOR_MATCHING_TEST = "keyvector_matching_test"
-    PINCH_GRASPS_TEST = "pinch_grasps_test"
     HUMAN_HAND_WORKSPACE = "human_hand_workspace"
 
 

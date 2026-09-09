@@ -4,7 +4,6 @@
 Reads all metrics-stats_*.pkl files from the reports directory and prints
 comparison tables grouped by retargeter for:
   - Keyvector Matching (cosine similarity, scale ratio, angle error, length error)
-  - Pinch Grasps (cosine similarity, scale ratio, angle error, length error)
   - Motion Preservation (directional alignment)
   - Flatness (mean squared acceleration)
   - Workspace (utilization)
@@ -26,7 +25,7 @@ import numpy as np
 from mimic_retargeter_lab.types.metrics import Metric, metric_spec
 
 
-KNOWN_DATASETS = ("wilor", "manus")
+KNOWN_DATASETS = ("manus",)
 KNOWN_RETARGETERS = (
     # Match longer (multi-token) suffixes first so e.g. "sampling_based"
     # is preferred over a naive rsplit that would yield "based".
@@ -59,7 +58,7 @@ def load_all_reports(reports_dir: Path) -> dict:
             rest, ret = parts
         else:
             rest = label[: -(len(ret) + 1)]
-        ds = next((d for d in KNOWN_DATASETS if rest.startswith(f"{d}_")), "wilor")
+        ds = next((d for d in KNOWN_DATASETS if rest.startswith(f"{d}_")), "unknown")
         hand = rest[len(ds) + 1 :] if rest.startswith(f"{ds}_") else rest
         datasets.setdefault(ds, {}).setdefault(ret, {})[hand] = data
     return datasets
@@ -102,10 +101,7 @@ FINGER_ORDER_5 = ["thumb_tip", "index_tip", "middle_tip", "ring_tip", "little_ti
 FINGER_LABELS_5 = ["thm", "idx", "mid", "ring", "lit"]
 
 
-# Map a summarize-table column label to its KV registry entry. The Pinch
-# Grasps pkl reuses these same display strings as literal column keys
-# (different schema, same human-facing names) — keep this mapping local
-# since the Pinch side has no ``MetricSpec`` yet to drive it.
+# Map a summarize-table column label to its KV registry entry.
 _KV_COLUMN_TO_METRIC = {
     "Cosine Similarity": Metric.COSINE_SIMILARITY,
     "Angle Error [deg]": Metric.ANGLE_ERROR_DEG,
@@ -124,20 +120,14 @@ def kv_table_label(key: str) -> str:
 
 
 def extract_reference_pose_metric(data, metric_name, key):
-    """Extract a per-keyvector scalar from Keyvector Matching or Pinch Grasps.
+    """Extract a per-keyvector scalar from Keyvector Matching.
 
-    Dispatches on the metric:
-      - "Keyvector Matching" — time-series schema:
-          ``vector_metrics[name][<short_key>]``. The (pkl_subkey, stat)
-          pair comes from :func:`mimic_retargeter_lab.types.metrics.metric_spec`'s
-          ``kv_detail`` so it stays in sync with the dashboard.
-          Median is computed from the raw per-frame array; mean is read
-          from the precomputed summary field.
-      - "Pinch Grasps" (or any other static-pose metric) — legacy schema:
-          ``reference_pose_metrics.error_metrics[name][<column_label>]``.
-          Each pose is a single scalar; ``stat`` doesn't apply. The
-          column-label string is the data contract with that benchmark
-          and is passed through verbatim.
+    "Keyvector Matching" — time-series schema:
+        ``vector_metrics[name][<short_key>]``. The (pkl_subkey, stat)
+        pair comes from :func:`mimic_retargeter_lab.types.metrics.metric_spec`'s
+        ``kv_detail`` so it stays in sync with the dashboard.
+        Median is computed from the raw per-frame array; mean is read
+        from the precomputed summary field.
     """
     if metric_name not in data:
         return {}
@@ -327,7 +317,7 @@ def _print_ref_pose_subtable(
 
 
 def print_ref_pose_table(retargeters, metric_name, all_hands):
-    """Print Keyvector Matching or Pinch Grasps tables."""
+    """Print Keyvector Matching table."""
     is_kv = metric_name == "Keyvector Matching"
     keys = (
         "Cosine Similarity",
@@ -616,25 +606,6 @@ def print_overall_comparison(retargeters, all_hands):
             print(f"{fmt(v, width=col_w)}", end="")
         print()
 
-    # Pinch
-    for key, label in [
-        ("Cosine Similarity", "Pinch Grasps (cos sim)"),
-        ("Scale Ratio [robot/human]", "Pinch Grasps (scale ratio)"),
-        ("Angle Error [deg]", "Pinch Grasps (angle err deg)"),
-        ("Length Error [mm]", "Pinch Grasps (len err mm)"),
-    ]:
-        row = []
-        for rn in ret_names:
-            vals = []
-            for hand, data in retargeters[rn].items():
-                m = extract_reference_pose_metric(data, "Pinch Grasps", key)
-                vals.extend(v for v in m.values() if not np.isnan(v))
-            row.append(np.mean(vals) if vals else float("nan"))
-        print(f"  {label:<35}", end="")
-        for v in row:
-            print(f"{fmt(v, width=col_w)}", end="")
-        print()
-
     # Motion Preservation
     row_mean = []
     for rn in ret_names:
@@ -859,11 +830,6 @@ def _run_summary(datasets):
         # ── Keyvector Matching ──
         print_header("KEYVECTOR MATCHING")
         print_ref_pose_table(retargeters, "Keyvector Matching", all_hands)
-
-        # ── Pinch Grasps (wilor only — MANO-format static dataset) ──
-        if ds_name == "wilor":
-            print_header("PINCH GRASPS")
-            print_ref_pose_table(retargeters, "Pinch Grasps", all_hands)
 
         # ── Motion Preservation ──
         print_header("MOTION PRESERVATION")
