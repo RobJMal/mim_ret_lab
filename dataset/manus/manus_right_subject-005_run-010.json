@@ -1,6 +1,6 @@
 {
   "manus_version": "3.1.1",
-  "subject": "001",
+  "subject": "005",
   "run": 10,
   "chirality": "RIGHT",
   "data_shape": [
@@ -14,13 +14,13 @@
     "channels"
   ],
   "channel_layout": "px, py, pz, qw, qx, qy, qz",
-  "duration_sec": 44.234,
-  "avg_rate_hz": 113.01,
-  "start_time": "2026-05-04T21:46:53",
-  "end_time": "2026-05-04T21:47:37",
+  "duration_sec": 42.2,
+  "avg_rate_hz": 118.46,
+  "start_time": "2026-09-02T16:23:23",
+  "end_time": "2026-09-02T16:24:05",
   "quaternion_order": "wxyz",
   "glove_ids": [
-    3064964832
+    86784735
   ],
   "notes": null
 }
