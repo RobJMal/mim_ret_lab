@@ -23,7 +23,7 @@ Retargeting algorithms are what enable humans to bridge the embodiment gap with 
 - [Hybrid](https://arxiv.org/abs/2506.11916) [`hybrid`]
 - [DexPilot](https://arxiv.org/abs/1910.03135) [`dexpilot`]
 - [Analyzing Key Objectives (AKO)](https://arxiv.org/abs/2506.09384) [`ako`]
-- [Sampling-Based](https://arxiv.org/abs/2607.07491) [`sampling_based`]
+- Sampling-Based [`sampling_based`]
 - [Geometric Retargeting (GeoRT)](https://arxiv.org/abs/2503.07541) [`geort`]
 
 *Note on running Sampling-Based Retargeter*: `sampling_based` requires a GPU to run because it is sampling many robot positions in parallel. If your system does not have a GPU, the performance will be extremely slow. 
@@ -36,7 +36,7 @@ Retargeting algorithms are what enable humans to bridge the embodiment gap with 
 
 ```bash
 # Clone the repository
-git clone https://github.com/mimicrobotics/mimic_retargeter_lab.git
+git clone <repository-url>
 cd mimic_retargeter_lab
 
 # Install dependencies (creates ./.venv automatically)
@@ -152,24 +152,6 @@ See [docs/integrating_new_hand.md](docs/integrating_new_hand.md) for a full walk
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT). See [LICENSE](LICENSE) for details.
 
 Third-party components are documented in [LICENSE_THIRD_PARTY.md](LICENSE_THIRD_PARTY.md).
-
-## Citation
-
-If you use this repo, please cite our work:
-
-```bibtex
-@misc{malate2026_smoothoperator,
-      title={Smooth Operator: A Real-Time Sampling-Based Algorithm for Kinematic Hand Retargeting}, 
-      author={Robert Jomar Malate and Erik Bauer and Norica Bacuieti and Stefanos Charalambous and Elvis Nava and Robert K. Katzschmann and Benedek Forrai},
-      year={2026},
-      eprint={2607.07491},
-      archivePrefix={arXiv},
-      primaryClass={cs.RO},
-      url={https://arxiv.org/abs/2607.07491}, 
-}
-```
-
-This citation metadata is also available in machine-readable form in [CITATION.cff](CITATION.cff), which enables GitHub's "Cite this repository" button.
 
 ## References
 

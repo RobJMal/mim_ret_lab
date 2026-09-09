@@ -5,7 +5,6 @@
 # Plays back the recorded data and runs the visualizer. Simplest way of 
 # checking the performance of the retargeter.
 #
-# Author: Robert Jomar Malate (robert.malate@mimicrobotics.com)
 
 # Get the directory where the script file ($0) is located.
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
@@ -23,9 +22,9 @@ else
 fi
 
 # Default arguments
-DEFAULT_DATASET_FILENAME="dataset_right_manus_subject-RJM_run-010.npy"
+DEFAULT_DATASET_FILENAME="dataset_right_manus_subject-000_run-010.npy"
 DEFAULT_HAND="p50"
-DEFAULT_CKPT_TAG="geort_right_manus_subject-RJM_exp-000"
+DEFAULT_CKPT_TAG="geort_right_manus_subject-000_exp-000"
 DEFAULT_FPS=100
 
 # 1. Parse Arguments (with defaults)
