@@ -33,7 +33,6 @@ class BenchmarkMetric(enum.Enum):
     """
 
     KEYVECTOR_MATCHING = "keyvector_matching"
-    PINCH_GRASPS = "pinch_grasps"
     WORKSPACE = "workspace"
     COLLISION = "collision"
     MOTION_PRESERVATION = "motion_preservation"
@@ -139,7 +138,6 @@ _BENCHMARK_EMOJI: dict[BenchmarkMetric, str] = {
     BenchmarkMetric.WORKSPACE: "🛠",
     BenchmarkMetric.COLLISION: "💥",
     BenchmarkMetric.LATENCY: "⏱️",
-    BenchmarkMetric.PINCH_GRASPS: "🤏",
 }
 
 

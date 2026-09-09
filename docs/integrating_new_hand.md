@@ -125,7 +125,6 @@ config/metrics/<hand_name>/
 ├── flatness.yaml
 ├── keyvector_matching.yaml
 ├── motion_preservation.yaml
-├── pinch_grasps.yaml
 ├── response.yaml
 └── workspace.yaml
 ```
@@ -198,7 +197,7 @@ python scripts/run_online_retargeting.py hand=<hand_name>
 | Factory registration | `mimic_retargeter_lab/hand_models/__init__.py` |
 | Hand config | `config/hand/<hand_name>.yaml` |
 | Retargeter configs (x4) | `config/retargeter_cfg/{keyvector,dexpilot,ako,joint_angle}/human_hand_to_<hand_name>.yaml` |
-| Metrics configs (x6) | `config/metrics/<hand_name>/{flatness,keyvector_matching,motion_preservation,pinch_grasps,response,workspace}.yaml` |
+| Metrics configs (x5) | `config/metrics/<hand_name>/{flatness,keyvector_matching,motion_preservation,response,workspace}.yaml` |
 | Unit tests | `tests/hand_models/test_<hand_name>_model.py` + golden `.npz` fixture |
 | Conftest fixture | `tests/hand_models/conftest.py` (add path fixture) |
 

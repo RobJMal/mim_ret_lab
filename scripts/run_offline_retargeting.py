@@ -32,11 +32,9 @@ jax.config.update("jax_compilation_cache_dir", str(cache_dir))
 # Force JAX to cache EVERYTHING, ignoring the 1-second rule
 jax.config.update("jax_persistent_cache_min_compile_time_secs", 0)
 
-from mimic_retargeter_lab.data_sources import HandDatasetReader
 from mimic_retargeter_lab.data_sources.datasets import ManusNpzReader
 from mimic_retargeter_lab.scenes import KinematicRetargetingScene
 from mimic_retargeter_lab.types import Chirality, RobotHandType, Retargeter, Simulator
-from mimic_retargeter_lab.types.types import HandDataset
 from mimic_retargeter_lab.utils import configure_logging, get_logger
 
 
@@ -57,19 +55,15 @@ def main(cfg: DictConfig) -> None:
         data_base_path = Path(
             hydra.utils.to_absolute_path(cfg.data_base_path)
         ).resolve()
-        offline_source = getattr(cfg, "offline_source", "wilor")
+        offline_source = getattr(cfg, "offline_source", "manus")
         if offline_source == "manus":
             hand_data_source = ManusNpzReader(
                 data_path=data_base_path,
                 num_episodes=getattr(cfg, "num_episodes", None),
             )
-        elif offline_source == "wilor":
-            hand_data_source = HandDatasetReader(
-                data_path=data_base_path, dataset=HandDataset(cfg.hand_dataset)
-            )
         else:
             raise ValueError(
-                f"Unknown offline_source={offline_source!r}; expected 'wilor' or 'manus'."
+                f"Unknown offline_source={offline_source!r}; expected 'manus'."
             )
     else:
         hand_data_source = hydra.utils.instantiate(cfg.hand_tracker)

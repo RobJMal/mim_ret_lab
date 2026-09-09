@@ -1,7 +1,4 @@
-# Manus-mode bundle: continuous manus npz stream. Pinch Grasps is MANO-only
-# (static reference poses) and is intentionally omitted.
-# Reads the same per-hand metric YAMLs as the wilor bundle — the data source
-# (reader class + args) is injected here, not duplicated per metric.
+# Manus-mode bundle: continuous manus npz stream.
 defaults:
   - /metrics@_global_.metrics.motion_preservation: ${hand}/motion_preservation
   - /metrics@_global_.metrics.keyvector_matching:  ${hand}/keyvector_matching
